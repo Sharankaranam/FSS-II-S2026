@@ -20,6 +20,7 @@
 6. [Project Structure](#-project-structure)
 7. [Getting Started & Local Execution](#-getting-started--local-execution)
 8. [Automated Scripts & Utilities](#-automated-scripts--utilities)
+9. [Cross-Validation & Testing](#-cross-validation--testing)
 
 ---
 
@@ -175,3 +176,42 @@ node simulate.js
   pip install python-pptx
   python3 update_ppt.py
   ```
+- **Cross-Validation (`cross_validation.js`):** Runs the validation suite that compares the fuzzy logic outputs against human-intuitive bounds across multiple test profiles.
+  ```bash
+  node cross_validation.js
+  ```
+
+---
+
+## 🧪 Cross-Validation & Testing
+
+To verify that the computational outputs of our Fuzzy Inference System align with human intuition, the platform includes a **Cross-Validation Engine** (`cross_validation.js`).
+
+This test suite runs **13 realistic scenario profiles** across all 5 amenity categories (e.g. high-end dining, dirty/unsafe hotels, crowded convenience stores). Because human labels have fuzzy boundaries, each scenario defines a range of acceptable labels (e.g. rating a $9.5/10$ restaurant as either `Very Good` or `Excellent` is humanly intuitive).
+
+To execute the test suite:
+```bash
+node cross_validation.js
+```
+
+### Expected Output Report:
+```
+=====================================================================
+             FUZZY SYSTEM CROSS-VALIDATION ENGINE REPORT              
+=====================================================================
+Loaded 13 expert test scenarios across 5 categories.
+Running evaluation comparison against human-intuitive bounds...
+
+ID  CATEGORY      HUMAN INTUITION RANGE         PREDICTED   SCORE   STATUS    SCENARIO DESCRIPTION
+----------------------------------------------------------------------------------------------------------------------------------
+1   RESTAURANTS   Very Good OR Excellent        Very Good   85.4    ✅ MATCH   High-end dining with outstanding taste...
+2   RESTAURANTS   Bad OR Very Bad               Bad         33.3    ✅ MATCH   Poor food quality, terrible taste...
+...
+----------------------------------------------------------------------------------------------------------------------------------
+Validation Summary: 13/13 matches.
+Cross-Validation Label Accuracy: 100.0%
+=====================================================================
+🎉 SUCCESS: The Fuzzy Engine outputs align 100% with human-intuitive expectations!
+=====================================================================
+```
+
